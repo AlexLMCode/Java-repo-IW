@@ -1,0 +1,33 @@
+Solucion:
+
+Cliente - Datos:
+    -id -Cedula - String
+    -Nombres - String
+    -Apellidos - String
+    -Telefono - String
+    -Direccion - String
+    - Correo-e - String
+
+Proveedor - Datos:
+    -id -entero
+    -Nombre -String
+    -Direccion -String
+    -Productos -Lista
+
+Productos - Datos:
+    -id - Entero
+    -Nombre -String
+    -Descipcion - String
+    -Precio de compra - double
+    -precio de venta - double
+    -cantidad - entero
+    -id proveedor - entero
+    -Cantidad minima stock - entero
+
+Factura - datos:
+    -id -entero
+    -fecha -Datetime
+    -id cliente - cedula String
+    -conjunto de productos - Lista
+    -impuesto - double
+    -valor total - double
