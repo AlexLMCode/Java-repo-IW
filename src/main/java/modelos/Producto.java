@@ -5,7 +5,7 @@ public class Producto {
     private int id;
     private String nombre;
     private String descripcion;
-    private double precio;
+    private double precioCompra;
     private double precioVenta;
     private int cantidadMinimaStock;
     private int idProveedor;
@@ -18,7 +18,7 @@ public class Producto {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.precio = precio;
+        this.precioCompra = precio;
         this.precioVenta = precioVenta;
         this.cantidadMinimaStock = cantidadMinimaStock;
         this.idProveedor = idProveedor;
@@ -48,12 +48,12 @@ public class Producto {
         this.descripcion = descripcion;
     }
 
-    public double getPrecio() {
-        return precio;
+    public double getPrecioCompra() {
+        return precioCompra;
     }
 
-    public void setPrecio(double precio) {
-        this.precio = precio;
+    public void setPrecioCompra(double precioCompra) {
+        this.precioCompra = precioCompra;
     }
 
     public double getPrecioVenta() {
