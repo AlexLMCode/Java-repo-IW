@@ -46,11 +46,17 @@ public class Aplicacion {
                 opcion = capturarNumeroEntero("Digite la operacion a realizar");
 
                 if (opcion < SALIR || opcion > GESTION_FACTURACION) {
-                    System.out.println("MENSAJE: Debe digitar un valor entre 0 y 4");
+                    mostrarMensaje("MENSAJE: Debe digitar un valor entre 0 y 4");
 
                 }
 
             } while (opcion < SALIR || opcion > GESTION_FACTURACION);
+
+            if (opcion == SALIR) {
+                break;
+            }
+
+            System.out.println("");
 
             switch (opcion) {
                 // CRUD CLIENTES
@@ -61,7 +67,8 @@ public class Aplicacion {
                         opcionSubmenu = capturarNumeroEntero("Digite la operacion a realizar");
 
                         if (opcionSubmenu < SALIR || opcionSubmenu > ELIMINAR) {
-                            System.out.println("MENSAJE: Debe digitar un valor entre 0 y 4");
+                            mostrarMensaje("MENSAJE: Debe digitar un valor entre 0 y 4");
+                            continuar();
                         }
 
                     } while (opcionSubmenu < SALIR || opcionSubmenu > ELIMINAR);
@@ -78,7 +85,8 @@ public class Aplicacion {
                             if (cliente != null) {
                                 mostrarDatosCliente(cliente);
                             } else {
-                                System.out.println("No se encontro un cliente");
+                                mostrarMensaje("No se encontro un cliente");
+
                             }
                             break;
 
@@ -88,7 +96,7 @@ public class Aplicacion {
                                 actualizarDatosCliente(cliente);
                                 mostrarDatosCliente(cliente);
                             } else {
-                                System.out.println("No se encontro un cliente");
+                                mostrarMensaje("No se encontro un cliente");
                             }
 
                             break;
@@ -107,7 +115,8 @@ public class Aplicacion {
                         opcionSubmenu = capturarNumeroEntero("Digite la operacion a realizar");
 
                         if (opcionSubmenu < SALIR || opcionSubmenu > ELIMINAR) {
-                            System.out.println("MENSAJE: Debe digitar un valor entre 0 y 4");
+                            mostrarMensaje("MENSAJE: Debe digitar un valor entre 0 y 4");
+                            continuar();
                         }
 
                     } while (opcionSubmenu < SALIR || opcionSubmenu > ELIMINAR);
@@ -125,7 +134,7 @@ public class Aplicacion {
                             if (producto != null) {
                                 mostrarDatosProducto(producto);
                             } else {
-                                System.out.println("No se encontro un producto con ese id");
+                                mostrarMensaje("No se encontro un producto con ese id");
                             }
                             break;
 
@@ -135,7 +144,7 @@ public class Aplicacion {
                                 actualizarDatosProducto(producto, proveedores);
                                 mostrarDatosProducto(producto);
                             } else {
-                                System.out.println("No se encontro ese producto");
+                                mostrarMensaje("No se encontro ese producto");
                             }
 
                             break;
@@ -156,7 +165,8 @@ public class Aplicacion {
                         opcionSubmenu = capturarNumeroEntero("Digite la operacion a realizar");
 
                         if (opcionSubmenu < SALIR || opcionSubmenu > ELIMINAR) {
-                            System.out.println("MENSAJE: Debe digitar un valor entre 0 y 4");
+                            mostrarMensaje("MENSAJE: Debe digitar un valor entre 0 y 4");
+                            continuar();
                         }
 
                     } while (opcionSubmenu < SALIR || opcionSubmenu > ELIMINAR);
@@ -173,7 +183,7 @@ public class Aplicacion {
                             if (proveedor != null) {
                                 mostrarDatosProovedor(proveedor);
                             } else {
-                                System.out.println("No se encontro un proveedor con ese ID");
+                                mostrarMensaje("No se encontro un proveedor con ese ID");
                             }
                             break;
 
@@ -183,7 +193,7 @@ public class Aplicacion {
                                 actualizarDatosProovedor(proveedor);
                                 mostrarDatosProovedor(proveedor);
                             } else {
-                                System.out.println("No se encontro ese proovedor");
+                                mostrarMensaje("No se encontro ese proovedor");
                             }
 
                             break;
@@ -203,7 +213,8 @@ public class Aplicacion {
                         opcionSubmenu = capturarNumeroEntero("Digite la operacion a realizar");
 
                         if (opcionSubmenu < SALIR || opcionSubmenu > BUSCAR) {
-                            System.out.println("MENSAJE: Debe digitar un valor entre 0 y 2");
+                            mostrarMensaje("MENSAJE: Debe digitar un valor entre 0 y 2");
+                            continuar();
                         }
 
                     } while (opcionSubmenu < SALIR || opcionSubmenu > BUSCAR);
@@ -211,17 +222,26 @@ public class Aplicacion {
                     switch (opcionSubmenu) {
 
                         case CREAR:
-                            factura = crearFactura(clientes, productos, facturas);
-                            facturas.add(factura);
+                            if (clientes.isEmpty() && productos.isEmpty()) {
+                                mostrarMensaje("MENSAJE: No se puede crear una factura mientras no haya clientes o productos");
+                            } else {
+                                factura = crearFactura(clientes, productos, facturas);
+                                facturas.add(factura);
+
+                            }
                             break;
 
                         case BUSCAR:
-                            factura = buscarFactura(facturas);
+                            if (!facturas.isEmpty()) {
+                                factura = buscarFactura(facturas);
 
-                            if (factura != null) {
-                                mostrarDatosFactura(factura, clientes, productos);
+                                if (factura != null) {
+                                    mostrarDatosFactura(factura, clientes, productos);
+                                } else {
+                                    mostrarMensaje("No se encontro una factura con ese id");
+                                }
                             } else {
-                                System.out.println("No se encontro una factura con ese id");
+                                mostrarMensaje("Aun no se han creado facturas");
                             }
                             break;
 
@@ -233,6 +253,11 @@ public class Aplicacion {
 
         } while (opcion != SALIR);
 
+    }
+
+    private static void mostrarMensaje(String s) {
+        System.out.println("");
+        System.out.print(s);
     }
 
     private static void mostrarDatosFactura(Factura factura, List<Cliente> clientes, List<Producto> productos) {
@@ -282,7 +307,8 @@ public class Aplicacion {
             idFactura = capturarNumeroEntero("Digite el ID de la factura");
 
             if (idFactura <= 0) {
-                System.out.println("MENSAJE: El id de la factura debe ser un numero positivo");
+                mostrarMensaje("MENSAJE: El id de la factura debe ser un numero positivo");
+                continuar();
                 continue;
             }
 
@@ -291,7 +317,8 @@ public class Aplicacion {
             if (factura != null) {
                 break;
             } else {
-                System.out.println("No se ah encontrado una factura con el id especificado.");
+                mostrarMensaje("MENSAJE: No se ah encontrado una factura con el id especificado.");
+                continuar();
             }
 
 
@@ -308,6 +335,7 @@ public class Aplicacion {
     private static Factura crearFactura(List<Cliente> clientes, List<Producto> productos, List<Factura> facturas) {
 
         System.out.println("----- 1.- Crear Factura ------");
+
         double total = 0;
         int numeroCedula;
         Cliente cliente;
@@ -328,7 +356,9 @@ public class Aplicacion {
             numeroCedula = capturarNumeroEntero("Ingrese el numero de cedula del cliente");
 
             if (numeroCedula <= 0) {
-                System.out.println("MENSAJE: el numero de cedula no puede ser negativo.");
+                mostrarMensaje("MENSAJE: el numero de cedula no puede ser negativo.");
+                continuar();
+                continue;
             }
 
             cliente = buscarClientePorCedula(clientes, String.valueOf(numeroCedula));
@@ -336,7 +366,8 @@ public class Aplicacion {
             if (cliente != null) {
                 break;
             } else {
-                System.out.println("MENSAJE: No exisete un cliente con ese numero de cedula.");
+                mostrarMensaje("MENSAJE: No exisete un cliente con ese numero de cedula.");
+                continuar();
             }
 
         } while (true);
@@ -344,12 +375,13 @@ public class Aplicacion {
 
         do {
             System.out.println("Listado de productos:");
+            System.out.println("0. Salir");
 
             for (Producto productoEnLista : productos) {
                 System.out.printf("%d. %s - $%.2f - %d unidades\n", productoEnLista.getId(), productoEnLista.getNombre(), productoEnLista.getPrecioVenta(), productoEnLista.getCantidadMinimaStock());
             }
 
-            System.out.println("0. Salir");
+
             idProducto = capturarNumeroEntero("Digite el id del producto");
 
             if (idProducto == SALIR && !idsProductos.isEmpty()) {
@@ -357,7 +389,7 @@ public class Aplicacion {
             }
 
             if (idProducto <= 0) {
-                System.out.println("MENSAJE: El id del producto debe ser un numero positivo.");
+                mostrarMensaje("MENSAJE: El id del producto debe ser un numero positivo.");
                 continue;
             }
 
@@ -1065,7 +1097,7 @@ public class Aplicacion {
             }
 
             System.out.println("MENSAJE: Ah escrito una cadena vacia, ingrese un valor");
-
+            continuar();
         }
     }
 
@@ -1080,9 +1112,11 @@ public class Aplicacion {
 
             } catch (NumberFormatException e) {
 
-                System.out.println("Mensaje: Digite un valor que corresponda a un valor entero");
+                System.out.println("\nMensaje: Digite un valor que corresponda a un valor entero");
 
             }
+
+            continuar();
 
         }
 
@@ -1103,6 +1137,8 @@ public class Aplicacion {
 
             }
 
+            continuar();
+
         }
 
     }
@@ -1113,5 +1149,11 @@ public class Aplicacion {
         return !email.matches(regex);
     }
 
+    static void continuar() {
+        System.out.println("");
+        System.out.println("Presione ENTER para continuar...");
+        teclado.nextLine();
+        System.out.println("");
+    }
 
 }
