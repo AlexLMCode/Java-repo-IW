@@ -6,8 +6,8 @@ public class Proveedor {
     private String telefono;
     private String direccion;
 
-    public Proveedor() {
-
+    public Proveedor(int id) {
+        this.id = id;
     }
 
     public Proveedor(int id, String nombre, String telefono, String direccion) {
@@ -16,6 +16,7 @@ public class Proveedor {
         this.telefono = telefono;
         this.direccion = direccion;
     }
+
 
     public int getId() {
         return id;
@@ -48,4 +49,28 @@ public class Proveedor {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + this.id;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Proveedor other = (Proveedor) obj;
+        return this.id == other.id;
+    }
+    
+    
 }

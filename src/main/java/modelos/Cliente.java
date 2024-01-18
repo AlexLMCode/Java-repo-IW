@@ -1,24 +1,26 @@
 package modelos;
 
+import java.util.Objects;
+
 public class Cliente {
     private String cedula;
     private String nombres;
     private String apellidos;
-    private String telefono;
-    private String direccion;
-    private String correoElectronico;
+    private Telefono telefono;
+    private Direccion direccion;
+    private CorreoElectronico correo;
 
-    public Cliente() {
-
-    }
-
-    public Cliente(String cedula, String nombres, String apellidos, String telefono, String direccion, String correoElectronico) {
+    public Cliente(String cedula, String nombres, String apellidos, Telefono telefono, Direccion direccion, CorreoElectronico correo) {
         this.cedula = cedula;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.telefono = telefono;
         this.direccion = direccion;
-        this.correoElectronico = correoElectronico;
+        this.correo = correo;
+    }
+    
+    public Cliente(String cedula){
+        this.cedula = cedula;
     }
 
     public String getCedula() {
@@ -45,27 +47,52 @@ public class Cliente {
         this.apellidos = apellidos;
     }
 
-    public String getTelefono() {
-        return telefono;
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 23 * hash + Objects.hashCode(this.cedula);
+        return hash;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Cliente other = (Cliente) obj;
+        return Objects.equals(this.cedula, other.cedula);
+    }
+
+    public String getTelefono() {
+        return this.telefono.getNumero();
     }
 
     public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+        return this.direccion.getCallePrincipal();
     }
 
     public String getCorreoElectronico() {
-        return correoElectronico;
+        return this.correo.getCorreo();
     }
 
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
+    public void setTelefono(String telefono) {
+        this.telefono = new Telefono(telefono);
     }
+
+    public void setDireccion(String callePrincipal,String calleSecundaria) {
+        this.direccion = new Direccion(callePrincipal,calleSecundaria);
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = new CorreoElectronico(correo);
+    }
+    
+    
 }

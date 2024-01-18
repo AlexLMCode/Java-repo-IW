@@ -10,10 +10,6 @@ public class Producto {
     private int cantidadMinimaStock;
     private int idProveedor;
 
-    public Producto() {
-
-    }
-
     public Producto(int id, String nombre, String descripcion, double precio, double precioVenta, int cantidadMinimaStock, int idProveedor) {
         this.id = id;
         this.nombre = nombre;
@@ -22,6 +18,10 @@ public class Producto {
         this.precioVenta = precioVenta;
         this.cantidadMinimaStock = cantidadMinimaStock;
         this.idProveedor = idProveedor;
+    }
+
+    public Producto(int id) {
+        this.id = id;
     }
 
     public int getId() {
@@ -79,4 +79,28 @@ public class Producto {
     public void setIdProveedor(int idProveedor) {
         this.idProveedor = idProveedor;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + this.id;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Producto other = (Producto) obj;
+        return this.id == other.id;
+    }
+    
+    
 }
