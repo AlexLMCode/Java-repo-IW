@@ -31,14 +31,13 @@ public class Aplicacion {
     private static final int ACTUALIZAR = 3;
     private static final int ELIMINAR = 4;
 
-    public static Scanner teclado;
+    
 
     public static void main(String[] args) {
         
         GestionParcial tipoGestion;
         int opcionTipoGestion;
         int opcionSubmenu;
-        teclado = new Scanner(System.in);
         
         do{ 
             do{ 
@@ -58,7 +57,6 @@ public class Aplicacion {
                 opcionSubmenu = capturarNumeroEntero("Digite la operacion a realizar");
                 if (opcionSubmenu < SALIR || opcionSubmenu > ELIMINAR) {
                     System.out.println("MENSAJE: Debe digitar un valor entre 0 y 4");
-                    continuar();
                 }
             } while (opcionSubmenu < SALIR || opcionSubmenu > ELIMINAR);
             switch (opcionSubmenu){
@@ -119,50 +117,52 @@ public class Aplicacion {
         System.out.println("0. Salir");
     }
     
-    public static String capturarCadenaCaracteres(String mensaje) {
-        String resultado;
-        while (true) {
-            System.out.printf("%s: ", mensaje);
-            resultado = teclado.nextLine().strip();
-            if (!resultado.isEmpty()) {
-                return resultado;
-            }
-            System.out.println("MENSAJE: Ah escrito una cadena vacia, ingrese un valor");
-            continuar();
-        }
-    }
+   public static String capturarCadenaCaracteres(String mensaje) {
+        String resultado = null;
 
-
-    public static int capturarNumeroEntero(String mensaje) {
-        while (true) {
-            try {
+        try(Scanner teclado=new Scanner(System.in)){
+            while (true) {
                 System.out.printf("%s: ", mensaje);
-                return Integer.parseInt(teclado.nextLine());
-            } catch (NumberFormatException e) {
-                System.out.println("\nMensaje: Digite un valor que corresponda a un valor entero");
+                resultado = teclado.nextLine().strip();
+                if (!resultado.isEmpty()) {
+                    return resultado;
+                }
+                System.out.println("MENSAJE: Ah escrito una cadena vacia, ingrese un valor");
             }
-            continuar();
-        }
+        }catch(Exception e){}
+        return resultado;
     }
 
+    public static Integer capturarNumeroEntero(String mensaje) {
+        try(Scanner teclado=new Scanner(System.in)){
+            while (true) {
+                try {
+                    System.out.printf("%s: ", mensaje);
+                    return Integer.parseInt(teclado.nextLine());
+
+                } catch (NumberFormatException e) {
+                    System.out.println("\nMensaje: Digite un valor que corresponda a un valor entero");
+                }
+            }
+        }catch(Exception e){}
+        return null;
+    }
 
     public static Double capturarNumeroReal(String mensaje) {
-        while (true) {
-            try {
-                System.out.printf("%s: ", mensaje);
-                return Double.parseDouble(teclado.nextLine());
-            } catch (NumberFormatException e) {
-                System.out.println("Mensaje: Digite un valor que corresponda a un numero real");
-            }
-            continuar();
-        }
-    }
+        try(Scanner teclado=new Scanner(System.in)){
+            while (true) {
+                try {
+                    System.out.printf("%s: ", mensaje);
+                    return Double.parseDouble(teclado.nextLine());
 
-    private static void continuar() {
-        System.out.println("");
-        System.out.println("Presione ENTER para continuar...");
-        teclado.nextLine();
-        System.out.println("");
+                } catch (NumberFormatException e) {
+
+                    System.out.println("Mensaje: Digite un valor que corresponda a un numero real");
+                }
+            }
+        }catch(Exception e){}
+        return null;
+
     }
 
 }

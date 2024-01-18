@@ -18,7 +18,8 @@ public class GestionProducto implements GestionCompleta, Lectura {
 
     @Override
     public void actualizarDatos() {
-        Producto producto = buscar();
+        int id = capturarNumeroEntero("Digite el id del producto");
+        Producto producto = buscar(id);
         if(producto!=null){
             System.out.println("--- 3. Actualizar Producto  ---");
 
@@ -75,8 +76,8 @@ public class GestionProducto implements GestionCompleta, Lectura {
                 }
 
                 GestionProveedor g = new GestionProveedor();
-                idProveedor = g.buscar().getId();
-                if (g.buscar() != null) {
+                idProveedor= capturarNumeroEntero("Digite el id del producto");
+                if (g.buscar(idProveedor) != null) {
                     break;
                 } else {
                     System.out.printf("MENSAJE: no existe un proveedor con el id %s especificado. \n", idProveedor);
@@ -97,7 +98,8 @@ public class GestionProducto implements GestionCompleta, Lectura {
 
     @Override
     public void mostrarDatos() {
-        Producto producto = buscar();
+        int id = capturarNumeroEntero("Digite el id del producto");
+        Producto producto = buscar(id);
         if(producto!=null){
             System.out.println("--- 2. Datos de Producto  ---");
 
@@ -112,17 +114,7 @@ public class GestionProducto implements GestionCompleta, Lectura {
     }
 
     @Override
-    public Producto buscar() {
-        int id;
-        
-        System.out.println("--- 2. Buscar Producto  ---");
-        do {
-            id = capturarNumeroEntero("Digite el id del producto");
-            if (id <= 0) {
-                System.out.println("MENSAJE: El id debe ser un numero positivo");
-                id = 0;
-            }
-        } while (id <= 0);
+    public Producto buscar(int id) {
         
         Producto productoBuscado = new Producto(id);
         int index = Aplicacion.productos.indexOf(productoBuscado);
@@ -195,8 +187,8 @@ public class GestionProducto implements GestionCompleta, Lectura {
             System.out.printf("%d. %s\n", proveedor.getId(), proveedor.getNombre());
         }
         GestionProveedor g = new GestionProveedor();
-        Proveedor p = g.buscar();
-        idProveedor = p.getId();
+        idProveedor = capturarNumeroEntero("Digite el numero de id del Proveedor");
+        Proveedor p = g.buscar(idProveedor);
         producto = new Producto(id, nombre, descripcion, precio, precioVenta, cantidadMinimaStock, idProveedor);
         Aplicacion.productos.add(producto);
     }
@@ -206,7 +198,8 @@ public class GestionProducto implements GestionCompleta, Lectura {
         System.out.println("--- 4. Eliminar Producto  ---");
 
         Producto producto;
-        producto = buscar();
+        int id = capturarNumeroEntero("Digite el id del producto");
+        producto = buscar(id);
 
         if (producto != null) {
 

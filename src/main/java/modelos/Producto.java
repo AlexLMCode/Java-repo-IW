@@ -10,10 +10,6 @@ public class Producto {
     private int cantidadMinimaStock;
     private int idProveedor;
 
-    public Producto() {
-
-    }
-
     public Producto(int id, String nombre, String descripcion, double precio, double precioVenta, int cantidadMinimaStock, int idProveedor) {
         this.id = id;
         this.nombre = nombre;

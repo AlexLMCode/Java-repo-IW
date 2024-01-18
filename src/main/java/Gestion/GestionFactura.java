@@ -29,7 +29,7 @@ public class GestionFactura implements GestionParcial, Lectura {
         System.out.println("----- 1.- Crear Factura ------");
 
         double total = 0;
-        String cedula;
+        int cedula;
         Cliente cliente;
         List<Integer> idsProductos = new ArrayList<>();
         int idProducto;
@@ -43,10 +43,9 @@ public class GestionFactura implements GestionParcial, Lectura {
                 System.out.printf("%s, %s %s\n.", clienteEnLista.getCedula(), clienteEnLista.getNombres(), clienteEnLista.getApellidos());
             }
 
-            cedula = capturarCadenaCaracteres("Ingrese el numero de cedula del cliente");
-
             GestionCliente g = new GestionCliente();
-            cliente = g.buscar();
+            cedula =capturarNumeroEntero("Ingrese de nuevo el numero de cedula a registrar: ");
+            cliente = (Cliente) g.buscar(cedula);
 
             if (cliente != null) {
                 break;
@@ -130,7 +129,7 @@ public class GestionFactura implements GestionParcial, Lectura {
 
         } while (true);
 
-        Factura nuevaFactura = new Factura(cedula, impuesto / 100.0);
+        Factura nuevaFactura = new Factura(String.valueOf(cedula), impuesto / 100.0);
 
         idsProductos.forEach(idProductoLista -> nuevaFactura.agregarIdProducto(idProductoLista));
         nuevaFactura.setTotal(total);
@@ -140,20 +139,21 @@ public class GestionFactura implements GestionParcial, Lectura {
     }
     
     @Override
-    public Factura buscar() {
+    public Factura buscar(int idFactura) {
         System.out.println("----- 2.- Buscar Factura ------");
 
-        int idFactura;
-        Factura factura;
+        Factura factura=null;
 
         do {
             System.out.println("Listado de facturas");
             
-            for (Factura f : Aplicacion.facturas) {
-                System.out.printf("%d. %s - %s", f.getId(), f.getCedulaCliente(), f.getFecha());
+            if(!Aplicacion.facturas.isEmpty()){
+                for (Factura f : Aplicacion.facturas) {
 
+                    System.out.printf("%d.", f.getId());
+
+                }
             }
-            idFactura = capturarNumeroEntero("Digite el ID de la factura");
 
             if (idFactura <= 0) {
                 mostrarMensaje("MENSAJE: El id de la factura debe ser un numero positivo");
@@ -172,14 +172,16 @@ public class GestionFactura implements GestionParcial, Lectura {
     
     @Override
     public void mostrarDatos() {
-        Factura factura = buscar();
+        int idFactura = capturarNumeroEntero("Digite el ID de la factura");
+        Factura factura = buscar(idFactura);
         if(factura!=null){
             System.out.println("----- 2.- Datos Factura ------");
 
             System.out.println("ID: " + factura.getId());
             System.out.println("Fecha: " + factura.getFecha());
             GestionCliente g = new GestionCliente();
-            Cliente cliente = g.buscar();
+            int cedula =capturarNumeroEntero("Ingrese de nuevo el numero de cedula a registrar: ");
+            Cliente cliente =(Cliente) g.buscar(cedula);
 
             System.out.println("Total factura: $" + factura.getTotal());
 

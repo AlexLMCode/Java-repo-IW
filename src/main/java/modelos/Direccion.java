@@ -23,16 +23,13 @@ package modelos;
         return callePrincipal;
     }
 
-    public void setCallePrincipal(String callePrincipal) {
-        this.callePrincipal = callePrincipal;
+    public void setDireccion(String callePrincipal,String calleSecundaria) {
+        this.callePrincipal= callePrincipal;
+        this.calleSecundaria = calleSecundaria;
     }
 
     public String getCalleSecundaria() {
         return calleSecundaria;
-    }
-
-    public void setCalleSecundaria(String calleSecundaria) {
-        this.calleSecundaria = calleSecundaria;
     }
 
     public String getCodigoPostal() {

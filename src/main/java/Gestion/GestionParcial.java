@@ -12,7 +12,7 @@ package Gestion;
 public interface GestionParcial {
     public void mostrarSubmenu();
     
-    public Object buscar();
+    public Object buscar(int codigo);
     
     public void crear();
     

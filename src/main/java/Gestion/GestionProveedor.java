@@ -31,7 +31,8 @@ public class GestionProveedor implements GestionCompleta, Lectura {
 
         } while (id <= 0);
 
-        proveedor = buscar();
+        id = capturarNumeroEntero("Digite el id del producto");
+        proveedor = buscar(id);
 
         if (proveedor != null) {
             List<Producto> productosProveedor = buscarProductosPorIdProveedor(Aplicacion.productos, id);
@@ -51,7 +52,8 @@ public class GestionProveedor implements GestionCompleta, Lectura {
 
     @Override
     public void actualizarDatos() {
-        Proveedor proveedor = buscar();
+        int id = capturarNumeroEntero("Digite el id del producto");
+        Proveedor proveedor = buscar(id);
         if(proveedor!=null){
             System.out.printf("--- 1. Actualizar Proovedor %s ---", proveedor.getNombre());
             System.out.println(" ");
@@ -78,7 +80,8 @@ public class GestionProveedor implements GestionCompleta, Lectura {
 
     @Override
     public void mostrarDatos() {
-        Proveedor proveedor = buscar();
+        int id = capturarNumeroEntero("Digite el id del producto");
+        Proveedor proveedor = buscar(id);
         if(proveedor!=null){
             System.out.printf("====== DATOS DE CLIENTE %s ======", proveedor.getNombre());
             System.out.println("Id: " + proveedor.getId());
@@ -89,15 +92,7 @@ public class GestionProveedor implements GestionCompleta, Lectura {
     }
 
     @Override
-    public Proveedor buscar() {
-        int id;
-        do {
-            id = capturarNumeroEntero("Digite el numero de id del Proveedor");
-            if (id <= 0) {
-                System.out.println("MENSAJE: El id debe ser un numero entero positivo");
-                id = 0;
-            }
-        } while (id <= 0);
+    public Proveedor buscar(int id) {
 
         Proveedor ProveedorBuscado = new Proveedor(id);
         int index = Aplicacion.proveedores.indexOf(ProveedorBuscado);
@@ -123,8 +118,8 @@ public class GestionProveedor implements GestionCompleta, Lectura {
                 id = 0;
                 continue;
             }
-
-            proveedor = buscar();
+            id = capturarNumeroEntero("Digite el id del producto");
+            proveedor = buscar(id);
 
             if (proveedor != null) {
                 System.out.println("MENSAJE: Ya existe un proveedor con ese id.");

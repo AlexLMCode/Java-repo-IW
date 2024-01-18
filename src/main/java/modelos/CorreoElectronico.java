@@ -4,7 +4,6 @@
  */
 package modelos;
 
-import static aplicacion.Aplicacion.capturarCadenaCaracteres;
 
 /**
  *
@@ -14,39 +13,34 @@ public class CorreoElectronico {
     String correo;
     TipoCuenta tipoCuenta;
     
-    public CorreoElectronico(){
-        this.setCorreo();
-    }
-    
-    public final void setCorreo(){
-        String correoPrueba;
-        do {
-            correoPrueba = capturarCadenaCaracteres("Digite el correo electronico del nuevo cliente");
-            if (!validCorreo(correoPrueba)) {
-                System.out.println("MENSAJE: Correo invalido");
-            }
-        } while(!validCorreo(correoPrueba));
+    public CorreoElectronico(String correo){
         
-        this.correo=correoPrueba;
-        setTipoCuenta(correoPrueba);
+        setCorreo(correo);
+        
         
     }
     
-    private void setTipoCuenta(String correoNuevo){
+    public final void setCorreo(String correo){
+       
+       if(validCorreo(correo)){
+            this.correo=correo;
+            setTipoCuenta(correo);
+        }
+        
+    }
+    
+    private void setTipoCuenta(String correo){
         //Logica para determinar tipo de cuenta
     }
     
     private boolean validCorreo(String correo) {
-        String regex = "^[\\w-_.+]*[\\w-_.]@([\\w]+\\.)+[\\w]+[\\w]$";
+        String regex = "[a-zA-Z0-9._%+-]@[a-zA-Z0-9._%+-].[a-zA-Z0-9._%+-]$";
+        
         return !correo.matches(regex);
     }
 
     public String getCorreo() {
         return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
     }
 
     public TipoCuenta getTipoCuenta() {

@@ -27,8 +27,8 @@ public class GestionCliente implements GestionCompleta, Lectura{
     }
     
     @Override
-    public Cliente buscar() {
-        String cedula = capturarCadenaCaracteres("Digite la cedula: ");
+    public Cliente buscar(int cedulaEntrante) {
+        String cedula = String.valueOf(cedulaEntrante);
         Cliente clienteBuscado = new Cliente(cedula);
         int index = Aplicacion.clientes.indexOf(clienteBuscado);
         return index != -1 ? Aplicacion.clientes.get(index) : null;
@@ -40,24 +40,25 @@ public class GestionCliente implements GestionCompleta, Lectura{
         String nombres, apellidos;
         Telefono numeroTelefono;
         Cliente clienteCrear;
-        CorreoElectronico correo;
+        CorreoElectronico correoElectronico;
         Direccion direccion;
-        String cedula;
-
-        Cliente clienteBuscado = buscar();
+        int cedula;
+        cedula =capturarNumeroEntero("Ingrese de nuevo el numero de cedula a registrar: ");
+        Cliente clienteBuscado = buscar(cedula);
         if (clienteBuscado==null) {
-            cedula =capturarCadenaCaracteres("Ingrese de nuevo el numero de cedula a registrar: ");
+            
             nombres = capturarCadenaCaracteres("Digite los nombres del nuevo cliente: ");
             apellidos = capturarCadenaCaracteres("Digite los apellidos: ");
             String numeroTelf = capturarCadenaCaracteres("Digite el nuevo numero del cliente: ");
             String callePrincipal = capturarCadenaCaracteres("Digite la calle principal de la nueva direccion del cliente: ");
             String calleSecundaria = capturarCadenaCaracteres("Digite la calle secundaria de la nueva direccion del cliente: ");
-
+            String correo = capturarCadenaCaracteres("Digite el correo nuevo del cliente: ");
+            
             direccion = new Direccion(callePrincipal,calleSecundaria);
             numeroTelefono = new Telefono(numeroTelf);
-            correo = new CorreoElectronico();
+            correoElectronico = new CorreoElectronico(correo);
 
-            clienteCrear = new Cliente(cedula, nombres, apellidos, numeroTelefono, direccion, correo);
+            clienteCrear = new Cliente(String.valueOf(cedula), nombres, apellidos, numeroTelefono, direccion, correoElectronico);
             Aplicacion.clientes.add(clienteCrear);
         }
         else{
@@ -67,7 +68,8 @@ public class GestionCliente implements GestionCompleta, Lectura{
     
     @Override
     public void mostrarDatos() {
-        Cliente cliente = buscar();
+        int cedula =capturarNumeroEntero("Ingrese de nuevo el numero de cedula a registrar: ");
+        Cliente cliente = buscar(cedula);
         if(cliente!=null){
             System.out.println("========= Datos del cliente =========");
             System.out.println("Cedula: " + cliente.getCedula());
@@ -83,7 +85,8 @@ public class GestionCliente implements GestionCompleta, Lectura{
     
     @Override
     public void actualizarDatos() {
-        Cliente cliente = buscar();
+        int cedula =capturarNumeroEntero("Ingrese de nuevo el numero de cedula a registrar: ");
+        Cliente cliente = buscar(cedula);
         if(cliente!=null){
             System.out.printf("--- 1.Actualizar Cliente %s %s ---", cliente.getNombres(), cliente.getApellidos());
             String nombres = capturarCadenaCaracteres("Digite los nuevos nombres del cliente");
@@ -91,12 +94,13 @@ public class GestionCliente implements GestionCompleta, Lectura{
             String numeroTelf = capturarCadenaCaracteres("Digite el nuevo numero del cliente");
             String callePrincipal = capturarCadenaCaracteres("Digite la calle principal de la nueva direccion del cliente");
             String calleSecundaria = capturarCadenaCaracteres("Digite la calle secundaria de la nueva direccion del cliente");
-
+            String correo = capturarCadenaCaracteres("Digite el correo nuevo del cliente: ");
+            
             cliente.setNombres(nombres);
             cliente.setApellidos(apellidos);
             cliente.setTelefono(numeroTelf);
             cliente.setDireccion(callePrincipal,calleSecundaria);
-            cliente.setCorreo();
+            cliente.setCorreo(correo);
         }
 
     }
@@ -104,8 +108,8 @@ public class GestionCliente implements GestionCompleta, Lectura{
     @Override
     public void eliminar() {
 
-       
-        Cliente cliente = buscar();
+        int cedula =capturarNumeroEntero("Ingrese de nuevo el numero de cedula a registrar: ");
+        Cliente cliente = buscar(cedula);
 
         if (cliente != null) {
             Factura factura = buscarFacturaPorCedula(Aplicacion.facturas, Integer.parseInt(cliente.getCedula()));
@@ -129,8 +133,7 @@ public class GestionCliente implements GestionCompleta, Lectura{
         }
         return null;
     }
-    
-    
+
 }
 
 

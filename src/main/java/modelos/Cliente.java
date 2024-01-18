@@ -90,8 +90,8 @@ public class Cliente {
         this.direccion = new Direccion(callePrincipal,calleSecundaria);
     }
 
-    public void setCorreo() {
-        this.correo = new CorreoElectronico();
+    public void setCorreo(String correo) {
+        this.correo = new CorreoElectronico(correo);
     }
     
     
